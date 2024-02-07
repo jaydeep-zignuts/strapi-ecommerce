@@ -15,6 +15,7 @@ module.exports = {
               if (!name || !category) {
                 return ctx.badRequest(Messages.field);
               }
+              //find subcategory available or not
               const subcategory = await strapi
                 .query("api::sub-category.sub-category")
                 .findOne({
@@ -43,6 +44,7 @@ module.exports = {
         middlewares: [
           async (ctx, next) => {
             try {
+              //get all sub category
               ctx.request.query = {
                 ...(ctx.request.query = {
                   filters: {
@@ -70,6 +72,7 @@ module.exports = {
         middlewares: [
           async (ctx, next) => {
             try {
+              //sub categroy by id
               const id = ctx.params.id;
               if (!id) {
                 return ctx.badRequest(Messages.field);
@@ -118,6 +121,7 @@ module.exports = {
               if (!name || !category || !id) {
                 return ctx.badRequest(Messages.field);
               }
+              //find sub category
               const subcategory = await strapi
                 .query("api::sub-category.sub-category")
                 .findOne({
@@ -129,6 +133,7 @@ module.exports = {
               if (!subcategory) {
                 return ctx.badRequest(Messages.subcategoryNot);
               }
+              //checking subcategory available or not
               const subName = await strapi
                 .query("api::sub-category.sub-category")
                 .findOne({

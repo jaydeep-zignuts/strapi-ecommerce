@@ -12,7 +12,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
   async delete(ctx) {
     try {
       const id = ctx.params.id;
-      console.log(id);
+      //find product
       const findUpdate = await strapi.query("api::product.product").findOne({
         where: {
           id: id,
@@ -22,6 +22,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
       if (!findUpdate) {
         return ctx.badRequest(Messages.productNot);
       }
+      //delete product
       const deleted = await strapi.query("api::sproduct.product").update({
         where: {
           id: id,

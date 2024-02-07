@@ -25,6 +25,7 @@ module.exports = createCoreController(
         if (!findUpdate) {
           return ctx.badRequest(Messages.categoryNot);
         }
+        //delete category
         const deleted = await strapi.query("api::category.category").update({
           where: {
             id: id,

@@ -12,11 +12,10 @@ module.exports = {
           async (ctx, next) => {
             try {
               const { name } = ctx.request.body.data;
-              console.log("first,name", name);
               if (!name) {
                 return ctx.badRequest(Messages.field);
               }
-
+              //chaeckin category available or not
               const uniqueName = await strapi
                 .query("api::category.category")
                 .findOne({
@@ -123,7 +122,7 @@ module.exports = {
               if (!name || !id) {
                 return ctx.badRequest(Messages.field);
               }
-
+              //checking category available or not
               const uniqueName = await strapi
                 .query("api::category.category")
                 .findOne({
@@ -135,6 +134,7 @@ module.exports = {
               if (!uniqueName) {
                 return ctx.badRequest(Messages.categoryNot);
               }
+              //checking category name and id for update category name
               const catName = await strapi
                 .query("api::category.category")
                 .findOne({

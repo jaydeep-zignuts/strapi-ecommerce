@@ -11,6 +11,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 module.exports = createCoreController("api::like.like", ({ strapi }) => ({
   async find(ctx) {
     try {
+      //for geting all like products
       const like = await strapi.query("api::like.like").findMany({
         where: {
           isLiked: true,
@@ -31,6 +32,7 @@ module.exports = createCoreController("api::like.like", ({ strapi }) => ({
   async findOne(ctx) {
     try {
       const id = ctx.params.id;
+      // get product by id
       const like = await strapi.query("api::product.product").findOne({
         where: {
           id: id,
@@ -60,10 +62,10 @@ module.exports = createCoreController("api::like.like", ({ strapi }) => ({
     try {
       const id = ctx.params.id;
       const { product } = ctx.request.body.data;
-      console.log(id, product);
       if (!id || !product) {
         return ctx.badRequest(Messages.field);
       }
+      //find like product by like id
       const like = await strapi.query("api::like.like").findOne({
         where: {
           id: id,
@@ -78,6 +80,7 @@ module.exports = createCoreController("api::like.like", ({ strapi }) => ({
       if (!like) {
         return ctx.badRequest(Messages.notLiked);
       }
+      //unlike product
       const updatedData = await strapi.query("api::like.like").update({
         where: {
           id: id,

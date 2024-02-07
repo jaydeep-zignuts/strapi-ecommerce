@@ -75,6 +75,24 @@
       "relation": "manyToMany",
       "target": "api::like.like",
       "mappedBy": "users_permissions_users"
+    },
+    "carts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::cart.cart",
+      "inversedBy": "users_permissions_users"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::order.order",
+      "mappedBy": "users_permissions_users"
+    },
+    "contactNo": {
+      "type": "integer"
+    },
+    "address": {
+      "type": "string"
     }
   }
 }

@@ -11,7 +11,7 @@ module.exports = {
           async (ctx, next) => {
             try {
               const { name, description, price, qty, sub_category, image } =
-                ctx.request.body;
+                ctx.request.body.data;
               console.log(name, description, price, qty, sub_category, image);
 
               if (
@@ -24,6 +24,7 @@ module.exports = {
               ) {
                 return ctx.badRequest(Messages.field);
               }
+              //find product
               const product = await strapi
                 .query("api::product.product")
                 .findOne({
@@ -51,6 +52,7 @@ module.exports = {
         middlewares: [
           async (ctx, next) => {
             try {
+              //find all products
               ctx.request.query = {
                 ...ctx.request.query,
                 filters: {
@@ -77,6 +79,7 @@ module.exports = {
               if (!id) {
                 return ctx.badRequest(Messages.field);
               }
+              //find product by id
               ctx.request.query = {
                 ...ctx.request.query,
                 filters: {
@@ -117,7 +120,7 @@ module.exports = {
               if (!name || !description || !price || !qty || !sub_category) {
                 return ctx.badRequest(Messages.field);
               }
-
+              //find product
               const product = await strapi
                 .query("api::product.product")
                 .findOne({
@@ -129,6 +132,7 @@ module.exports = {
               if (!product) {
                 return ctx.badRequest(Messages.productNot);
               }
+              //checking for product name
               const productName = await strapi
                 .query("api::product.product")
                 .findOne({

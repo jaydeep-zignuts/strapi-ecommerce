@@ -13,6 +13,7 @@ module.exports = {
             if (!isLiked || !products) {
               ctx.badRequest(Messages.field);
             }
+            //find user
             const user = await strapi
               .query("plugin::users-permissions.user")
               .findOne({
@@ -24,6 +25,7 @@ module.exports = {
             if (!user) {
               return ctx.badRequest(Messages.user);
             }
+            //find product
             const product = await strapi.query("api::product.product").findOne({
               where: {
                 isDeleted: false,
@@ -33,6 +35,7 @@ module.exports = {
             if (!product) {
               return ctx.badRequest(Messages.productNot);
             }
+            //like product
             const like = await strapi.query("api::like.like").findOne({
               where: {
                 isLiked: true,

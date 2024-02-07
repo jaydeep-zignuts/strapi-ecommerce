@@ -14,7 +14,7 @@ module.exports = createCoreController(
     async delete(ctx) {
       try {
         const id = ctx.params.id;
-        console.log(id);
+        //find sub category
         const findUpdate = await strapi
           .query("api::sub-category.sub-category")
           .findOne({
@@ -26,6 +26,7 @@ module.exports = createCoreController(
         if (!findUpdate) {
           return ctx.badRequest(Messages.subcategoryNot);
         }
+        //delete sub category
         const deleted = await strapi
           .query("api::sub-category.sub-category")
           .update({

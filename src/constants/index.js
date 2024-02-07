@@ -15,7 +15,20 @@ const Messages = {
   like: "You already like this product",
   likeNot: "No liked product found",
   notLiked: "YOu not like product yet",
+  cart: "Already added to cart",
+  cartNot: "Your cart is empty",
+  qty: "Please add qty below ",
+  rmCart: "requested item is not in cart ",
+  order: "Your order list is empty",
+  character: "You've reached the maximum character limit in the",
+};
+const validation = {
+  regex: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#^])[A-Za-z\\d@$!%*?&]",
+  // Exactly 10 digits (e.g., 1234567890)
+  // 10 digit number with optional dashes, spaces, or dots after every 3 digits (e.g., 123-4560-789)
+  contactNo: "^\\d{3}[-. ]?\\d{3}[-. ]?\\d{4}$",
 };
 module.exports = {
   Messages,
+  validation,
 };
