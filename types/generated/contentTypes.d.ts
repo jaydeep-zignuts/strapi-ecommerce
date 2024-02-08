@@ -708,7 +708,7 @@ export interface ApiCartCart extends Schema.CollectionType {
   attributes: {
     products: Attribute.Relation<
       'api::cart.cart',
-      'oneToMany',
+      'manyToMany',
       'api::product.product'
     >;
     qty: Attribute.Integer;
@@ -816,7 +816,7 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     >;
     products: Attribute.Relation<
       'api::order.order',
-      'oneToMany',
+      'manyToMany',
       'api::product.product'
     >;
     qty: Attribute.Integer;
@@ -866,14 +866,14 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'manyToMany',
       'api::like.like'
     >;
-    cart: Attribute.Relation<
+    carts: Attribute.Relation<
       'api::product.product',
-      'manyToOne',
+      'manyToMany',
       'api::cart.cart'
     >;
-    order: Attribute.Relation<
+    orders: Attribute.Relation<
       'api::product.product',
-      'manyToOne',
+      'manyToMany',
       'api::order.order'
     >;
     createdAt: Attribute.DateTime;

@@ -9,6 +9,65 @@ const { Messages } = require("../../../constants");
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::like.like", ({ strapi }) => ({
+  async create(ctx, next) {
+    try {
+      const { isLiked, products } = ctx.request.body.data;
+      if (!isLiked || !products) {
+        ctx.badRequest(Messages.field);
+      }
+      //find user
+      const user = await strapi
+        .query("plugin::users-permissions.user")
+        .findOne({
+          where: {
+            isActive: true,
+            id: ctx.state.user.id,
+          },
+        });
+      if (!user) {
+        return ctx.badRequest(Messages.user);
+      }
+      //find product
+      const product = await strapi.query("api::product.product").findOne({
+        where: {
+          isDeleted: false,
+          id: products,
+        },
+      });
+      if (!product) {
+        return ctx.badRequest(Messages.productNot);
+      }
+      //like product
+      const like = await strapi.query("api::like.like").findOne({
+        where: {
+          isLiked: true,
+          products: products,
+          users_permissions_users: ctx.state.user.id,
+        },
+        populate: {
+          products: true,
+          users_permissions_users: true,
+        },
+      });
+      if (like) {
+        return ctx.badRequest(Messages.like);
+      }
+      const likeProduct = await strapi.query("api::like.like").create({
+        data: {
+          isLiked: true,
+          products: products,
+          users_permissions_users: ctx.state.user.id,
+        },
+        populate: {
+          products: true,
+          users_permissions_users: true,
+        },
+      });
+      return ctx.send({ data: likeProduct });
+    } catch (error) {
+      return ctx.badRequest(error.message);
+    }
+  },
   async find(ctx) {
     try {
       //for geting all like products

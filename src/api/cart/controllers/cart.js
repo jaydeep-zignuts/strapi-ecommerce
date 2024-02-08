@@ -52,6 +52,10 @@ module.exports = createCoreController("api::cart.cart", ({ strapi }) => ({
           users_permissions_users: ctx.state.user.id,
           isCart: true,
         },
+        populate: {
+          products: true,
+          users_permissions_users: true,
+        },
       });
       return ctx.send({ data: addToCart });
     } catch (error) {
@@ -71,6 +75,8 @@ module.exports = createCoreController("api::cart.cart", ({ strapi }) => ({
           users_permissions_users: true,
         },
       });
+      console.log(ctx.state.user.id);
+      console.log(cart);
       return ctx.send({ data: cart });
     } catch (error) {
       return ctx.badRequest(error.message);
@@ -78,6 +84,7 @@ module.exports = createCoreController("api::cart.cart", ({ strapi }) => ({
   },
   async findOne(ctx) {
     try {
+      console.log(ctx.params.id);
       if (!ctx.params.id) {
         return ctx.badRequest(Messages.field);
       }
@@ -93,6 +100,8 @@ module.exports = createCoreController("api::cart.cart", ({ strapi }) => ({
           users_permissions_users: true,
         },
       });
+      console.log("first");
+      console.log(cart);
       if (!cart) {
         return ctx.badRequest(Messages.rmCart);
       }

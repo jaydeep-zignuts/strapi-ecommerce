@@ -6,51 +6,7 @@ module.exports = {
       method: "POST",
       path: "/likes",
       handler: "like.create",
-      config: {
-        middlewares: [
-          async (ctx, next) => {
-            const { isLiked, products } = ctx.request.body.data;
-            if (!isLiked || !products) {
-              ctx.badRequest(Messages.field);
-            }
-            //find user
-            const user = await strapi
-              .query("plugin::users-permissions.user")
-              .findOne({
-                where: {
-                  isActive: true,
-                  id: ctx.state.user.id,
-                },
-              });
-            if (!user) {
-              return ctx.badRequest(Messages.user);
-            }
-            //find product
-            const product = await strapi.query("api::product.product").findOne({
-              where: {
-                isDeleted: false,
-                id: products,
-              },
-            });
-            if (!product) {
-              return ctx.badRequest(Messages.productNot);
-            }
-            //like product
-            const like = await strapi.query("api::like.like").findOne({
-              where: {
-                isLiked: true,
-                products: products,
-                users_permissions_users: ctx.state.user.id,
-              },
-            });
-            if (like) {
-              return ctx.badRequest(Messages.like);
-            }
-            await next();
-            console.log(ctx.response.body);
-          },
-        ],
-      },
+      config: {},
     },
     {
       method: "GET",

@@ -46,15 +46,15 @@
       "target": "api::like.like",
       "mappedBy": "products"
     },
-    "cart": {
+    "carts": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::cart.cart",
       "inversedBy": "products"
     },
-    "order": {
+    "orders": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::order.order",
       "inversedBy": "products"
     }
