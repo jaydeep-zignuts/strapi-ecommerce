@@ -46,7 +46,6 @@ module.exports = (plugin) => {
               if (!users) {
                 return ctx.badRequest(Messages.enable);
               }
-              console.log(user.password);
               //comparing the password
               const validPassword = await bcrypt.compare(
                 password,
@@ -273,7 +272,6 @@ module.exports = (plugin) => {
                 address,
                 provider = "local",
               } = ctx.request.body;
-              console.log(address);
               if (!email || !password) {
                 return ctx.badRequest(Messages.required);
               }
@@ -462,7 +460,6 @@ module.exports = (plugin) => {
       const user = await strapi
         .query("plugin::users-permissions.user")
         .update({ where: { id: ctx.state.user.id }, data: { token: "" } });
-      console.log("first, user", user);
       return user;
     } catch (err) {
       ctx.throw(500, "Internal Server Error");
@@ -470,6 +467,11 @@ module.exports = (plugin) => {
   };
   plugin.routes["content-api"].routes.push({
     path: "/auth/logout",
+    method: "GET",
+    handler: "auth.logout",
+  });
+  plugin.routes["content-api"].routes.push({
+    path: "/auth/forget-password",
     method: "GET",
     handler: "auth.logout",
   });
