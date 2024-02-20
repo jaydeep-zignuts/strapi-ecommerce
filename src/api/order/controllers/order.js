@@ -57,6 +57,20 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         if (product.qty < qty) {
           return ctx.badRequest(Messages.qty + product.qty);
         }
+        const updateQty = product.qty - qty;
+        console.log(updateQty);
+        const updateProduct = await strapi
+          .query("api::product.product")
+          .update({
+            where: {
+              id: products,
+              isDeleted: false,
+            },
+            data: {
+              qty: updateQty,
+            },
+          });
+
         //create order
         const order = await strapi.query("api::order.order").create({
           data: {
@@ -82,6 +96,20 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         if (product.qty < qty) {
           return ctx.badRequest(Messages.qty + product.qty);
         }
+        const updateQty = product.qty - qty;
+        console.log(updateQty);
+        const updateProduct = await strapi
+          .query("api::product.product")
+          .update({
+            where: {
+              id: products,
+              isDeleted: false,
+            },
+            data: {
+              qty: updateQty,
+            },
+          });
+
         //create order
         const order = await strapi.query("api::order.order").create({
           data: {

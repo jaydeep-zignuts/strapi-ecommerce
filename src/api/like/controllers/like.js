@@ -74,6 +74,7 @@ module.exports = createCoreController("api::like.like", ({ strapi }) => ({
       const like = await strapi.query("api::like.like").findMany({
         where: {
           isLiked: true,
+          users_permissions_users: ctx.state.user.id,
         },
         populate: {
           products: true,
@@ -96,6 +97,7 @@ module.exports = createCoreController("api::like.like", ({ strapi }) => ({
         where: {
           id: id,
           isDeleted: false,
+          users_permissions_users: ctx.state.user.id,
         },
         populate: {
           likes: {
